@@ -1,68 +1,190 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* WellNavi Landing Page - Custom Animations & Effects */
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Background animated blobs */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  filter: blur(40px);
+  animation: pulse 4s ease-in-out infinite;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+.bg-blob-1 {
+  top: 80px;
+  left: 40px;
+  width: 288px;
+  height: 288px;
+  background: rgba(168, 85, 247, 0.1);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.bg-blob-2 {
+  top: 160px;
+  right: 80px;
+  width: 384px;
+  height: 384px;
+  background: rgba(59, 130, 246, 0.1);
+  animation-delay: 2s;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.bg-blob-3 {
+  bottom: 80px;
+  left: 80px;
+  width: 320px;
+  height: 320px;
+  background: rgba(16, 185, 129, 0.1);
+  animation-delay: 4s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Glassmorphism header */
+.glass-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Heart ping effect */
+.heart-ping {
+  position: absolute;
+  inset: 0;
+  background: rgba(244, 114, 182, 0.2);
+  border-radius: 50%;
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(
+    to right,
+    rgb(244, 114, 182),
+    rgb(196, 181, 253),
+    rgb(129, 140, 248)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Fade in animations with delays */
+.fade-in-up {
+  opacity: 0; /* Added so it doesn’t flash before animating */
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-delay-1 {
+  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+.fade-in-delay-2 {
+  animation: fadeInUp 0.8s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+.fade-in-delay-3 {
+  animation: fadeInUp 0.8s ease-out 0.9s forwards;
+  opacity: 0;
+}
+
+/* Floating animations with different timing */
+.float-1 {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-2 {
+  animation: float 6s ease-in-out infinite 0.5s;
+}
+
+.float-3 {
+  animation: float 6s ease-in-out infinite 1s;
+}
+
+/* Feature card hover glow effect */
+.feature-card-hover:hover {
+  box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
+}
+
+/* Step connector line */
+.step-connector {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .step-connector {
+    display: block;
+    position: absolute;
+    top: 64px;
+    left: 100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, rgb(168, 85, 247), transparent);
+    transform: translateX(16px);
+    z-index: 0;
   }
-  a:hover {
-    color: #747bff;
+}
+
+/* CTA section overlay */
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+/* Scroll bounce indicator */
+.scroll-bounce {
+  animation: scrollBounce 2s infinite;
+}
+
+/* Keyframe animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  button {
-    background-color: #f9f9f9;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes scrollBounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40%,
+  43% {
+    transform: translateX(-50%) translateY(-15px);
+  }
+  70% {
+    transform: translateX(-50%) translateY(-7px);
+  }
+  90% {
+    transform: translateX(-50%) translateY(-3px);
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
   }
 }
