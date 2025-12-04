@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Brain, Stethoscope, TrendingUp, Target, Activity, Shield, ChevronDown, Star, Users, Award, MessageCircle, X, Bot, User } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { chatAPI } from '../services/api';
 // import '../index.css';
 const LandingPage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -42,11 +42,9 @@ const LandingPage = () => {
     setChatLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/chat/health-assistant', {
+      const response = await chatAPI.sendMessage({
         message: chatInput,
         conversationHistory: chatMessages
-      }, {
-        withCredentials: true
       });
 
       if (response.data.success) {

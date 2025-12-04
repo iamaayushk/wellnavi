@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Heart, Eye, EyeOff, Mail, Lock, ArrowRight, Shield, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { authAPI } from '../services/api';
 import { isAuthenticated } from '../utils/auth';
 
 const LoginPage = () => {
@@ -15,7 +15,6 @@ const LoginPage = () => {
   });
 
   const navigate = useNavigate();
-  const API_URL = 'http://localhost:5000/api';
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -49,18 +48,14 @@ const LoginPage = () => {
     try {
       setLoading(true);
       
-      const response = await axios.post(`${API_URL}/auth/login`, {
+      const response = await authAPI.login({
         email: formData.email,
         password: formData.password,
         rememberMe: formData.rememberMe
-      }, {
-        withCredentials: true // Enable sending/receiving cookies
       });
 
       if (response.data.success) {
-        // Store user data in localStorage (not the token, that's in cookie)
-        localStorage.setItem('user', JSON.stringify(response.data.data.user));
-        
+        // Token is now stored in HTTP-only cookie by backend
         // Redirect to dashboard
         navigate('/dashboard');
       }
@@ -70,7 +65,7 @@ const LoginPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [formData, navigate, API_URL]);
+  }, [formData, navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">

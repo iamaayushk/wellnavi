@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Heart, Eye, EyeOff, Mail, Lock, User, ArrowRight, CheckCircle, Calendar, Phone, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { authAPI } from '../services/api';
 import { isAuthenticated } from '../utils/auth';
 
 const SignUpPage = () => {
@@ -23,7 +23,6 @@ const SignUpPage = () => {
   });
 
   const navigate = useNavigate();
-  const API_URL = 'http://localhost:5000/api';
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -89,7 +88,7 @@ const SignUpPage = () => {
     try {
       setLoading(true);
       
-      const response = await axios.post(`${API_URL}/auth/signup`, {
+      const response = await authAPI.signup({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
@@ -98,8 +97,6 @@ const SignUpPage = () => {
         password: formData.password,
         agreeToTerms: formData.agreeToTerms,
         allowMarketing: formData.allowMarketing
-      }, {
-        withCredentials: true // Enable sending/receiving cookies
       });
 
       if (response.data.success) {
@@ -112,7 +109,7 @@ const SignUpPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [formData, navigate, API_URL]);
+  }, [formData, navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">

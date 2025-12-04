@@ -31,6 +31,7 @@ import {
   Home
 } from 'lucide-react';
 import {useNavigate} from'react-router-dom';
+import { symptomAPI, chatAPI, getApiUrl } from '../services/api';
 
 const SymptomCheckerPage = () => {
   const [symptomInput, setSymptomInput] = useState('');
@@ -96,7 +97,7 @@ const SymptomCheckerPage = () => {
       ].filter(Boolean).join(', ');
 
       // Make API call to your backend
-      const response = await fetch('http://localhost:5000/api/symptoms/analyze', {
+      const response = await fetch(getApiUrl('/symptoms/analyze'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +162,7 @@ const SymptomCheckerPage = () => {
     setChatLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/chat/health-assistant', {
+      const response = await fetch(getApiUrl('/chat/health-assistant'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

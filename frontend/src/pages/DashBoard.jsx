@@ -3,7 +3,7 @@
   import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
   import { useNavigate } from 'react-router-dom';
   import { getUser, logout } from '../utils/auth';
-  import axios from 'axios';
+  import { healthAPI } from '../services/api';
 
   const Dashboard = () => {
     const [selectedTimeframe, setSelectedTimeframe] = useState('6months');
@@ -23,17 +23,18 @@
   const [activityData, setActivityData] = useState([]);    const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = getUser();
-    if (userData) {
-      setUser(userData);
-    }
+    const fetchUser = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setUser(userData);
+      }
+    };
+    fetchUser();
     fetchTodayHealthData();
     fetchHistoricalData();
   }, []);  const fetchTodayHealthData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/health/data/today', {
-        withCredentials: true
-      });
+      const response = await healthAPI.getTodayHealthData();
       
       if (response.data.success && response.data.data) {
         const metrics = response.data.data.metrics;
@@ -53,9 +54,7 @@
 
   const fetchHistoricalData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/health/data?limit=30', {
-        withCredentials: true
-      });
+      const response = await healthAPI.getHealthData({ limit: 30 });
       
       if (response.data.success && response.data.data) {
         const data = response.data.data;
@@ -122,11 +121,7 @@
 
     const handleSaveHealthData = async () => {
       try {
-        const response = await axios.post(
-          'http://localhost:5000/api/health/data',
-          healthData,
-          { withCredentials: true }
-        );
+        const response = await healthAPI.addHealthData(healthData);
 
         if (response.data.success) {
           console.log('Health data saved successfully');

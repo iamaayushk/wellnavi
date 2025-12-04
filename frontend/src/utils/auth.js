@@ -1,25 +1,24 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5000/api';
+import { authAPI } from '../services/api';
 
 // Check if user is authenticated by verifying token with backend
 export const isAuthenticated = async () => {
   try {
-    const response = await axios.get(`${API_URL}/auth/me`, {
-      withCredentials: true
-    });
+    const response = await authAPI.getMe();
     return response.data.success;
-  } catch (error) {
+  } catch {
     return false;
   }
 };
 
-// Get user data from localStorage
-export const getUser = () => {
+// Get user data from backend using cookie
+export const getUser = async () => {
   try {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  } catch (error) {
+    const response = await authAPI.getMe();
+    if (response.data.success) {
+      return response.data.data.user;
+    }
+    return null;
+  } catch {
     return null;
   }
 };
@@ -28,16 +27,10 @@ export const getUser = () => {
 export const logout = async () => {
   try {
     // Call backend logout endpoint to clear cookie
-    await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
-    
-    // Clear localStorage
-    localStorage.removeItem('user');
-    
+    await authAPI.logout();
     return true;
   } catch (err) {
     console.error('Logout error:', err);
-    // Clear localStorage anyway
-    localStorage.removeItem('user');
     return false;
   }
 };
