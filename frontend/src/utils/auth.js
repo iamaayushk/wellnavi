@@ -3,9 +3,12 @@ import { authAPI } from '../services/api';
 // Check if user is authenticated by verifying token with backend
 export const isAuthenticated = async () => {
   try {
+    console.log('🔐 Checking authentication...');
     const response = await authAPI.getMe();
+    console.log('🔐 Auth response:', response.data.success);
     return response.data.success;
-  } catch {
+  } catch (error) {
+    console.error('🔐 Auth check failed:', error.message);
     return false;
   }
 };

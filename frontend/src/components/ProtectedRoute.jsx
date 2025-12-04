@@ -8,7 +8,9 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      console.log('🔒 ProtectedRoute: Checking authentication...');
       const isAuth = await isAuthenticated();
+      console.log('🔒 ProtectedRoute: Authentication result:', isAuth);
       setAuthenticated(isAuth);
       setLoading(false);
     };
