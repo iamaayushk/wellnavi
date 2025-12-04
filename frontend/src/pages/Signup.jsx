@@ -169,7 +169,7 @@ const SignUpPage = () => {
                       value={formData.firstName}
                       onChange={handleInputChange}
                       className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200"
-                      placeholder="John"
+                      placeholder="Salman"
                     />
                   </div>
                 </div>
@@ -182,7 +182,7 @@ const SignUpPage = () => {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200"
-                    placeholder="Doe"
+                    placeholder="Khan"
                   />
                 </div>
               </div>
