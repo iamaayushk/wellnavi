@@ -11,12 +11,12 @@
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const [user, setUser] = useState(null);
   const [healthData, setHealthData] = useState({
-    steps: 0,
-    heartRate: 0,
-    sleep: 0,
-    water: 0,
-    weight: 0,
-    calories: 0
+    steps: '',
+    heartRate: '',
+    sleep: '',
+    water: '',
+    weight: '',
+    calories: ''
   });
   const [healthTrends, setHealthTrends] = useState([]);
   const [weeklyActivity, setWeeklyActivity] = useState([]);
@@ -65,7 +65,7 @@
           const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
           return {
             month: `${monthNames[date.getMonth()]} ${date.getDate()}`,
-            BMI: parseFloat(item.metrics.bmi) || 0,
+            // BMI: parseFloat(item.metrics.bmi) || 0,
             heartRate: item.metrics.heartRate?.average || 0,
             sleep: item.metrics.sleep?.hours || 0
           };
@@ -115,7 +115,7 @@
       const { name, value } = e.target;
       setHealthData(prev => ({
         ...prev,
-        [name]: parseFloat(value) || 0
+        [name]: value === '' ? '' : parseFloat(value) || ''
       }));
     };
 
@@ -479,14 +479,14 @@
                           color: 'white'
                         }}
                       />
-                      <Line 
+                      {/* <Line 
                         type="monotone" 
                         dataKey="BMI" 
                         stroke="#3B82F6" 
                         strokeWidth={3} 
                         name="BMI" 
                         dot={{ fill: '#3B82F6', strokeWidth: 2, r: 6 }}
-                      />
+                      /> */}
                       <Line 
                         type="monotone" 
                         dataKey="heartRate" 
