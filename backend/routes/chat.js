@@ -5,14 +5,7 @@ const { protect } = require('../middleware/auth');
 // Import Google Generative AI
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Initialize the AI model
-console.log('=== Initializing Google Generative AI ===');
-console.log('Raw API Key from env:', process.env.GEMINI_API_KEY);
-console.log('API Key length:', process.env.GEMINI_API_KEY?.length);
-console.log('API Key trimmed length:', process.env.GEMINI_API_KEY?.trim().length);
-console.log('First 15 chars:', process.env.GEMINI_API_KEY?.substring(0, 15));
-console.log('Last 5 chars:', process.env.GEMINI_API_KEY?.slice(-5));
-console.log('==========================================');
+
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY?.trim());
 
@@ -29,7 +22,7 @@ router.post('/health-assistant', async (req, res) => {
     }
 
     console.log('Processing message:', message);
-    console.log('Using API key (first 20 chars):', process.env.GEMINI_API_KEY?.substring(0, 20));
+    // console.log('Using API key (first 20 chars):', process.env.GEMINI_API_KEY?.substring(0, 20));
 
     // Create a fresh instance for each request to ensure no caching issues
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
